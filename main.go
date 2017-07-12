@@ -2,59 +2,29 @@ package main
 
 import (
 	"fmt"
-	"os"
-)
 
-const (
-	_        = iota
-	Rock     = 1 // グー
-	Scissors = 2 // チョキ
-	Paper    = 3 // パー
-)
-const (
-	_    = iota
-	Even = 0
-	Win  = 1
-	Lose = 2
+	"github.com/pkg/errors"
 )
 
 func main() {
+	var me, com Hand = Rock, Paper
 
-	var a int     // 自分
-	var b int     // 相手
-	var res int   // 勝敗
-	var err error // エラー
-
-	a = Rock  // グー
-	b = Paper // チョキ
-
-	if res, err = doJanken(a, b); err != nil {
-
-		fmt.Println(err)
-		os.Exit(1)
+	result, err := doJanken(me, com)
+	if err != nil {
+		fmt.Println(errors.Wrap(err, "error").Error())
+		return
 	}
-
-	switch res {
-	case Even:
-		fmt.Println("引分")
-	case Win:
-		fmt.Println("勝利")
-	case Lose:
-		fmt.Println("敗北")
-	default:
-		fmt.Println("???")
-	}
+	fmt.Printf("I'm: %v, computer's: %v, Result: I %v...\n", me, com, result)
 }
 
-func doJanken(a, b int) (int, error) {
-
-	if a > 3 || b > 3 {
-
-		message := "parameter error"
-		return Even, fmt.Errorf("error: %s", message)
+func doJanken(me, com Hand) (Result, error) {
+	if err := me.validate(); err != nil {
+		return Invalid, errors.Wrap(err, "me")
 	}
 
-	res := (b - a + 3) % 3
+	if err := com.validate(); err != nil {
+		return Invalid, errors.Wrap(err, "com")
+	}
 
-	return res, nil
+	return me.janken(com), nil
 }
