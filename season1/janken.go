@@ -23,13 +23,13 @@ const (
 
 const (
 	// Invalid is error.
-	Invalid Result = iota
+	Invalid Result = iota - 1
 	// Even is result after Janken.
 	Even
-	// Win is result after Janken.
-	Win
 	// Lose is result after Janken.
 	Lose
+	// Win is result after Janken.
+	Win
 )
 
 var user, computer Hand
@@ -37,6 +37,9 @@ var user, computer Hand
 func init() {
 	user = Rock
 	computer = Paper
+
+	fmt.Printf("Rock=%v, Scissors=%v, Paper=%v\n", Rock, Scissors, Paper)
+	fmt.Printf("Invalid=%v, Even=%v, Lose=%v, Win=%v\n", Invalid, Even, Lose, Win)
 }
 
 func main() {
