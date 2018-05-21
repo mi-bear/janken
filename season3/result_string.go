@@ -4,13 +4,14 @@ package main
 
 import "strconv"
 
-const _Result_name = "InvalidEvenWinLose"
+const _Result_name = "InvalidEvenLoseWin"
 
-var _Result_index = [...]uint8{0, 7, 11, 14, 18}
+var _Result_index = [...]uint8{0, 7, 11, 15, 18}
 
 func (i Result) String() string {
+	i -= -1
 	if i < 0 || i >= Result(len(_Result_index)-1) {
-		return "Result(" + strconv.FormatInt(int64(i), 10) + ")"
+		return "Result(" + strconv.FormatInt(int64(i+-1), 10) + ")"
 	}
 	return _Result_name[_Result_index[i]:_Result_index[i+1]]
 }

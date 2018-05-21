@@ -1,4 +1,4 @@
-# janken season3 [wip]
+# janken season3
 ## stringerを使おう
 ### stringerとは
 定数を定数名の文字列に変換する関数を生成するコマンド

@@ -5,11 +5,11 @@ type Result int
 
 const (
 	// Invalid is error.
-	Invalid Result = iota
+	Invalid Result = iota - 1
 	// Even is result after Janken.
 	Even
-	// Win is result after Janken.
-	Win
 	// Lose is result after Janken.
 	Lose
+	// Win is result after Janken.
+	Win
 )

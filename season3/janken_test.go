@@ -1,24 +1,43 @@
 package main
 
-import (
-	"testing"
+import "testing"
 
-	"github.com/stretchr/testify/assert"
-)
+func Test_janken(t *testing.T) {
+	tests := []struct {
+		user, computer Hand
+		result         Result
+		err            bool
+	}{
 
-func TestDoJanken(t *testing.T) {
+		{Rock, Rock, Even, false},
+		{Rock, Paper, Lose, false},
+		{Rock, Scissors, Win, false},
+		{Scissors, Rock, Lose, false},
+		{Scissors, Paper, Win, false},
+		{Scissors, Scissors, Even, false},
+		{Paper, Rock, Win, false},
+		{Paper, Paper, Even, false},
+		{Paper, Scissors, Lose, false},
 
-	assert := assert.New(t)
+		{4, Rock, Invalid, true},
+		{Paper, 0, Invalid, true},
+	}
 
-	assert.Equal(Rock, Rock, "引分")
-	assert.Equal(Rock, Scissors, "勝利")
-	assert.Equal(Rock, Paper, "敗北")
+	for _, test := range tests {
+		result, err := janken(test.user, test.computer)
+		e := err != nil
 
-	assert.Equal(Scissors, Scissors, "引分")
-	assert.Equal(Scissors, Paper, "勝利")
-	assert.Equal(Scissors, Rock, "敗北")
+		if e != test.err {
+			t.Errorf("should have error %+v", test)
+			continue
+		}
 
-	assert.Equal(Paper, Paper, "引分")
-	assert.Equal(Paper, Rock, "勝利")
-	assert.Equal(Paper, Scissors, "敗北")
+		if e {
+			continue
+		}
+
+		if result != test.result {
+			t.Errorf("janken(%v, %v) = %v, want %v", test.user, test.computer, result, test.result)
+		}
+	}
 }
