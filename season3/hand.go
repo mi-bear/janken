@@ -19,5 +19,5 @@ func (h Hand) validate() error {
 	case Rock, Scissors, Paper:
 		return nil
 	}
-	return errors.Errorf("%s is invalid Hand.", h)
+	return errors.Errorf("%v is invalid Hand.", h)
 }
